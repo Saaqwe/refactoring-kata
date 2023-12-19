@@ -19,12 +19,6 @@ class BasicItem extends GildedRoseItemAbstract
         $this->item = $item;
     }
 
-    public function update(): void
-    {
-        $this->updateQuality();
-        $this->updateSellIn();
-    }
-
     protected function updateQuality(): void
     {
         if ($this->sellIn <= 0) {

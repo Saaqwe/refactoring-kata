@@ -13,7 +13,7 @@ abstract class GildedRoseItemAbstract extends Item
     public function update(): void
     {
         $this->updateQuality();
-        $this->update();
+        $this->updateSellIn();
     }
 
     abstract protected function updateQuality(): void;
