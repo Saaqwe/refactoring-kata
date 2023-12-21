@@ -26,4 +26,12 @@ class ConjuredItemTest extends TestCase
         $gildedRose->updateQuality();
         $this->assertSame([-1, 14], [$receiveItems[0]->sellIn, $receiveItems[0]->quality]);
     }
+
+    public function testWithRandomName(): void
+    {
+        $receiveItems = [new Item(ConjuredItem::NAME . ' some str', 14, 4)];
+        $gildedRose = new GildedRose($receiveItems);
+        $gildedRose->updateQuality();
+        $this->assertSame([13, 2], [$receiveItems[0]->sellIn, $receiveItems[0]->quality]);
+    }
 }

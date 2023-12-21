@@ -14,11 +14,11 @@ class ItemsFactory
 {
     public static function createItem(Item $item): GildedRoseItemAbstract
     {
-        return match ($item->name) {
-            AgedBrieItem::NAME => new AgedBrieItem($item),
-            BackstagePasseItem::NAME => new BackstagePasseItem($item),
-            SulfurasItem::NAME => new SulfurasItem($item),
-            ConjuredItem::NAME => new ConjuredItem($item),
+        return match (true) {
+            $item->name === AgedBrieItem::NAME => new AgedBrieItem($item),
+            $item->name === BackstagePasseItem::NAME => new BackstagePasseItem($item),
+            $item->name === SulfurasItem::NAME => new SulfurasItem($item),
+            str_contains($item->name, ConjuredItem::NAME) => new ConjuredItem($item),
             default => new BasicItem($item),
         };
     }

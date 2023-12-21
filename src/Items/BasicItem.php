@@ -8,8 +8,12 @@ class BasicItem extends GildedRoseItemAbstract
 {
     public Item $item;
     protected int $qualityDecreaseSpeed = 1;
+    protected int $sellInDecreaseSpeed = 1;
     protected int $qualityMinValue = 0;
     protected int $qualityMaxValue = 50;
+    protected int $expiredItemSellInMultiplication = 2;
+
+    const SELL_IN_EXPIRED = 0;
 
     public function __construct(Item $item)
     {
@@ -21,8 +25,8 @@ class BasicItem extends GildedRoseItemAbstract
 
     protected function updateQuality(): void
     {
-        if ($this->sellIn <= 0) {
-            $this->qualityDecreaseSpeed *= 2;
+        if ($this->sellIn <= self::SELL_IN_EXPIRED) {
+            $this->qualityDecreaseSpeed *= $this->expiredItemSellInMultiplication;
         }
 
         $newQualityValue = $this->quality - $this->qualityDecreaseSpeed;
@@ -31,18 +35,27 @@ class BasicItem extends GildedRoseItemAbstract
 
     protected function updateIfQualityLimitationPassed(int $newQualityValue): void
     {
-        $this->quality = match (true) {
+        $this->setQuality(match (true) {
             $newQualityValue < $this->qualityMinValue => $this->qualityMinValue,
             $newQualityValue > $this->qualityMaxValue => $this->qualityMaxValue,
             default => $newQualityValue,
-        };
-        $this->item->quality = $this->quality;
+        });
     }
 
     protected function updateSellIn(): void
     {
-        $this->sellIn -= 1;
+        $this->setSellIn($this->sellIn - $this->sellInDecreaseSpeed);
+    }
 
-        $this->item->sellIn = $this->sellIn;
+    public function setSellIn(int $sellIn)
+    {
+        $this->sellIn = $sellIn;
+        $this->item->sellIn = $sellIn;
+    }
+
+    public function setQuality(int $quality)
+    {
+        $this->quality = $quality;
+        $this->item->quality = $quality;
     }
 }

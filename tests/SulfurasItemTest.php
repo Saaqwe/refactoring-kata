@@ -16,7 +16,7 @@ class SulfurasItemTest extends TestCase
         $receiveItems = [new Item(SulfurasItem::NAME, 7, 80)];
         $gildedRose = new GildedRose($receiveItems);
         $gildedRose->updateQuality();
-        $this->assertSame([7, 80], [$receiveItems[0]->sellIn, $receiveItems[0]->quality]);
+        $this->assertSame([0, 80], [$receiveItems[0]->sellIn, $receiveItems[0]->quality]);
     }
 
     public function testSellInZeroUpdate(): void

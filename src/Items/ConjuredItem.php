@@ -4,7 +4,7 @@ namespace GildedRose\Items;
 
 class ConjuredItem extends BasicItem
 {
-    const NAME = 'Conjured Mana Cake';
+    const NAME = 'Conjured';
 
     protected int $qualityDecreaseSpeed = 2;
 }
